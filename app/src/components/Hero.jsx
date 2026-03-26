@@ -4,11 +4,11 @@ import { useEffect, useRef } from 'react'
 import { patient, accuracyPromptA, models } from '../data/groundTruth'
 
 const accuracyBars = [
-  { name: 'HPP (P0)', accuracy: 100, color: '#00dfa2', isHpp: true },
-  { name: 'GPT-5.4', accuracy: 80, color: '#74aa9c' },
-  { name: 'Claude Opus', accuracy: 50, color: '#d4a574' },
-  { name: 'Gemini', accuracy: 40, color: '#8b9cf7' },
-  { name: 'Sonar Pro', accuracy: 50, color: '#20b2aa' },
+  { name: 'HPP (P0)', correct: 10, total: 10, accuracy: 100, color: '#00dfa2', isHpp: true },
+  { name: 'GPT-5.4', correct: 4, total: 5, accuracy: 80, color: '#74aa9c' },
+  { name: 'Claude Opus', correct: 3, total: 6, accuracy: 50, color: '#d4a574' },
+  { name: 'Gemini', correct: 2, total: 5, accuracy: 40, color: '#8b9cf7' },
+  { name: 'Sonar Pro', correct: 2, total: 4, accuracy: 50, color: '#20b2aa' },
 ]
 
 export default function Hero() {
@@ -97,9 +97,9 @@ export default function Hero() {
         <div className="animate-in animate-delay-3 hero-metrics-row" style={{
           display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 64,
         }}>
-          <MetricCard label="HPP Accuracy" value="100%" sub="10/10 claims correct" accent />
-          <MetricCard label="Best Competitor" value="80%" sub="GPT-5.4 — 4/5 correct" />
-          <MetricCard label="Worst Competitor" value="40%" sub="Gemini — 2/5 correct" warn />
+          <MetricCard label="HPP Accuracy" value="10/10" sub="10 verifiable claims, all correct" accent />
+          <MetricCard label="Best Competitor" value="4/5" sub="GPT-5.4 — half the claims, still missed one" />
+          <MetricCard label="Worst Competitor" value="2/5" sub="Gemini — 3 wrong out of 5" warn />
         </div>
 
         {/* Accuracy bars */}
@@ -111,48 +111,64 @@ export default function Hero() {
             letterSpacing: 2, textTransform: 'uppercase', color: 'var(--text-secondary)',
             marginBottom: 20,
           }}>
-            Numerical Accuracy — Prompt A (Metabolic Scorecard)
+            Verifiable Claims — Prompt A (Metabolic Scorecard)
           </div>
-          {accuracyBars.map((bar, i) => (
-            <div key={bar.name} style={{
-              display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12,
-            }}>
-              <div style={{
-                width: 110, fontFamily: 'var(--font-mono)', fontSize: 12,
-                color: bar.isHpp ? 'var(--hpp-green)' : 'var(--text-secondary)',
-                fontWeight: bar.isHpp ? 600 : 400, textAlign: 'right', flexShrink: 0,
+          {accuracyBars.map((bar, i) => {
+            const maxClaims = 10
+            const totalPct = (bar.total / maxClaims) * 100
+            const correctPct = (bar.correct / maxClaims) * 100
+            return (
+              <div key={bar.name} style={{
+                display: 'flex', alignItems: 'center', gap: 16, marginBottom: 12,
               }}>
-                {bar.name}
-              </div>
-              <div style={{
-                flex: 1, height: 32, background: 'var(--bg-secondary)',
-                borderRadius: 4, overflow: 'hidden', position: 'relative',
-              }}>
-                <div
-                  className="bar-fill"
-                  style={{
-                    height: '100%',
-                    width: `${bar.accuracy}%`,
-                    background: bar.isHpp
-                      ? 'linear-gradient(90deg, rgba(0,223,162,0.3), rgba(0,223,162,0.6))'
-                      : `linear-gradient(90deg, ${bar.color}33, ${bar.color}66)`,
+                <div style={{
+                  width: 110, fontFamily: 'var(--font-mono)', fontSize: 12,
+                  color: bar.isHpp ? 'var(--hpp-green)' : 'var(--text-secondary)',
+                  fontWeight: bar.isHpp ? 600 : 400, textAlign: 'right', flexShrink: 0,
+                }}>
+                  {bar.name}
+                </div>
+                <div style={{
+                  flex: 1, height: 32, background: 'var(--bg-secondary)',
+                  borderRadius: 4, overflow: 'hidden', position: 'relative',
+                }}>
+                  {/* Total claims (dimmer background) */}
+                  <div style={{
+                    position: 'absolute', top: 0, left: 0, height: '100%',
+                    width: `${totalPct}%`,
+                    background: bar.isHpp ? 'rgba(0,223,162,0.1)' : `${bar.color}15`,
                     borderRadius: 4,
                     transition: 'width 1s ease',
                     transitionDelay: `${i * 100}ms`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
-                    paddingRight: 12,
-                  }}
-                >
-                  <span style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700,
-                    color: bar.isHpp ? 'var(--hpp-green)' : bar.color,
-                  }}>
-                    {bar.accuracy}%
-                  </span>
+                  }} />
+                  {/* Correct claims (solid fill) */}
+                  <div
+                    className="bar-fill"
+                    style={{
+                      position: 'relative', height: '100%',
+                      width: `${correctPct}%`,
+                      background: bar.isHpp
+                        ? 'linear-gradient(90deg, rgba(0,223,162,0.3), rgba(0,223,162,0.6))'
+                        : `linear-gradient(90deg, ${bar.color}33, ${bar.color}66)`,
+                      borderRadius: 4,
+                      transition: 'width 1s ease',
+                      transitionDelay: `${i * 100}ms`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+                      paddingRight: 12,
+                    }}
+                  >
+                    <span style={{
+                      fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700,
+                      color: bar.isHpp ? 'var(--hpp-green)' : bar.color,
+                      whiteSpace: 'nowrap',
+                    }}>
+                      {bar.correct}/{bar.total}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Methodology */}
