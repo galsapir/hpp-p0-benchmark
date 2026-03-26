@@ -1,0 +1,21 @@
+{
+  "sample_id": "9186430910",
+  "prompt_file": "/home/ec2-user/workspace/ds_health_agent/benchmark/prompt.md",
+  "prompt_text": "Based on my data, give me a quick metabolic scorecard: grade each key area (glucose health, metabolic risk, cardiovascular risk), tell me exactly where I stand compared to people my age and sex, and give me the 2 most important things to change. Keep it to half a page \u2014 I want signal, not a report.",
+  "timestamp": "2026-03-26T09:24:20.841473+00:00",
+  "models": [
+    {
+      "model_name": "p0",
+      "model_slug": "hpp/p0-agent",
+      "model_returned": "hpp/p0-agent",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "total_tokens": null,
+      "latency_seconds": 198.68,
+      "error": null,
+      "skills": [
+        "benchmark_showcase"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "sample_id": "9186430910",
+  "prompt_file": "prompts/meal_grounded.md",
+  "prompt_text": "Using my glucose sensor data and diet logs, tell me: which meals are hurting me most, where my metabolic markers put me relative to my peers, and what my cardiovascular risk is. Short answer \u2014 just the actionable stuff.",
+  "timestamp": "2026-03-26T10:03:30.447376+00:00",
+  "models": [
+    {
+      "model_name": "p0",
+      "model_slug": "hpp/p0-agent",
+      "model_returned": "hpp/p0-agent",
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "total_tokens": null,
+      "latency_seconds": 208.6,
+      "error": null,
+      "skills": [
+        "benchmark_showcase"
+      ]
+    },
+    {
+      "model_name": "openai",
+      "model_slug": "openai/gpt-5.4",
+      "model_returned": "openai/gpt-5.4-20260305",
+      "prompt_tokens": 63989,
+      "completion_tokens": 1242,
+      "total_tokens": 65231,
+      "latency_seconds": 24.61,
+      "error": null
+    },
+    {
+      "model_name": "anthropic",
+      "model_slug": "anthropic/claude-opus-4.6",
+      "model_returned": "anthropic/claude-4.6-opus-20260205",
+      "prompt_tokens": 66191,
+      "completion_tokens": 1539,
+      "total_tokens": 67730,
+      "latency_seconds": 40.81,
+      "error": null
+    },
+    {
+      "model_name": "gemini",
+      "model_slug": "google/gemini-3.1-pro-preview",
+      "model_returned": "google/gemini-3.1-pro-preview-20260219",
+      "prompt_tokens": 98863,
+      "completion_tokens": 2943,
+      "total_tokens": 101806,
+      "latency_seconds": 71.4,
+      "error": null
+    },
+    {
+      "model_name": "perplexity",
+      "model_slug": "perplexity/sonar-pro",
+      "model_returned": "perplexity/sonar-pro",
+      "prompt_tokens": 63937,
+      "completion_tokens": 673,
+      "total_tokens": 64610,
+      "latency_seconds": 11.1,
+      "error": null
+    }
+  ]
+}
