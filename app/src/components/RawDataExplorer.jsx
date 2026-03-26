@@ -31,7 +31,7 @@ export default function RawDataExplorer({ data }) {
         >
           <div>
             <div style={{
-              fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600,
+              fontSize: 13, fontWeight: 600,
               color: 'var(--hpp-green)',
             }}>
               Ground Truth Metrics
@@ -90,7 +90,7 @@ export default function RawDataExplorer({ data }) {
           >
             <div>
               <div style={{
-                fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600,
+                fontSize: 13, fontWeight: 600,
                 color: 'var(--text-primary)',
               }}>
                 {file.label}
@@ -117,7 +117,7 @@ export default function RawDataExplorer({ data }) {
 }
 
 const thStyle = {
-  fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+  fontSize: 11, fontWeight: 600,
   letterSpacing: 0.5, textTransform: 'uppercase', color: 'var(--text-secondary)',
   padding: '10px 16px', textAlign: 'left',
   borderBottom: '2px solid var(--border)',

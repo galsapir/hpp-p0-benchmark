@@ -97,7 +97,7 @@ export default function Advantages() {
                     {adv.pitch}
                   </div>
                   <div style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--hpp-green)',
+                    fontSize: 11, color: 'var(--hpp-green)',
                     fontWeight: 600, letterSpacing: 0.5,
                   }}>
                     {adv.subtitle}
@@ -111,7 +111,7 @@ export default function Advantages() {
                     {adv.stat}
                   </div>
                   <div style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)',
+                    fontSize: 10, color: 'var(--text-tertiary)',
                     letterSpacing: 0.5, marginTop: 4, maxWidth: 100,
                   }}>
                     {adv.statLabel}
@@ -130,7 +130,7 @@ export default function Advantages() {
             }}>
               <div>
                 <div style={{
-                  fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                  fontSize: 10, fontWeight: 600,
                   letterSpacing: 1.5, textTransform: 'uppercase',
                   color: 'var(--hpp-green)', marginBottom: 8,
                 }}>
@@ -146,7 +146,7 @@ export default function Advantages() {
               </div>
               <div>
                 <div style={{
-                  fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                  fontSize: 10, fontWeight: 600,
                   letterSpacing: 1.5, textTransform: 'uppercase',
                   color: 'var(--error-red)', marginBottom: 8,
                 }}>

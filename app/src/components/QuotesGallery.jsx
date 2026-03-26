@@ -29,7 +29,7 @@ export default function QuotesGallery() {
                 {cat.label}
               </h3>
               <span style={{
-                fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-tertiary)',
+                fontSize: 11, color: 'var(--text-tertiary)',
               }}>
                 {items.length} {items.length === 1 ? 'instance' : 'instances'}
               </span>
@@ -120,7 +120,7 @@ function FabricationCard({ fab }) {
         flexWrap: 'wrap',
       }}>
         <span style={{
-          fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
+          fontSize: 12, fontWeight: 600,
           color: colors.text,
         }}>
           {fab.modelName}
@@ -149,7 +149,7 @@ function FabricationCard({ fab }) {
         display: 'flex', alignItems: 'flex-start', gap: 10,
       }}>
         <span style={{
-          fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+          fontSize: 10, fontWeight: 600,
           color: 'var(--hpp-green)', letterSpacing: 1, whiteSpace: 'nowrap',
           marginTop: 2,
         }}>

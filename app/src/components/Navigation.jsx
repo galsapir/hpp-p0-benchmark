@@ -1,5 +1,5 @@
-// ABOUTME: Sticky top navigation bar with section links and scroll-to behavior.
-// ABOUTME: Highlights active section based on scroll position.
+// ABOUTME: Sticky top navigation bar with section links, scroll-to, and light/dark toggle.
+// ABOUTME: Highlights active section based on scroll position. Persists theme to localStorage.
 import { useState, useEffect } from 'react'
 
 const sections = [
@@ -11,8 +11,20 @@ const sections = [
   { id: 'data', label: 'Raw Data' },
 ]
 
+function getInitialTheme() {
+  const stored = localStorage.getItem('hpp-theme')
+  if (stored === 'dark' || stored === 'light') return stored
+  return 'light'
+}
+
 export default function Navigation() {
   const [active, setActive] = useState('hero')
+  const [theme, setTheme] = useState(getInitialTheme)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('hpp-theme', theme)
+  }, [theme])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,6 +66,22 @@ export default function Navigation() {
               {s.label}
             </button>
           ))}
+          <div className="theme-toggle" style={{ marginLeft: 8 }}>
+            <button
+              className={`theme-toggle-option ${theme === 'light' ? 'active' : ''}`}
+              onClick={() => setTheme('light')}
+              title="Light mode"
+            >
+              ☀️
+            </button>
+            <button
+              className={`theme-toggle-option ${theme === 'dark' ? 'active' : ''}`}
+              onClick={() => setTheme('dark')}
+              title="Dark mode"
+            >
+              🌙
+            </button>
+          </div>
         </div>
       </div>
     </nav>

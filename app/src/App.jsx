@@ -16,6 +16,11 @@ function App() {
   const [route, setRoute] = useState(window.location.hash)
 
   useEffect(() => {
+    const theme = localStorage.getItem('hpp-theme') || 'light'
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [])
+
+  useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}all_deliverables.json`)
       .then(res => res.json())
       .then(d => {

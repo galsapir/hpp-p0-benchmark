@@ -54,7 +54,7 @@ export default function Hero() {
           borderRadius: 100, padding: '8px 20px', marginBottom: 32,
           fontSize: 13, color: 'var(--text-secondary)',
         }}>
-          <span style={{ color: 'var(--hpp-green)', fontFamily: 'var(--font-mono)', fontWeight: 600, fontSize: 11 }}>
+          <span style={{ color: 'var(--hpp-green)', fontWeight: 700, fontSize: 11, letterSpacing: 1, textTransform: 'uppercase' }}>
             PATIENT
           </span>
           <span style={{ width: 1, height: 16, background: 'var(--border)' }} />
@@ -107,8 +107,8 @@ export default function Hero() {
           maxWidth: 700,
         }}>
           <div style={{
-            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
-            letterSpacing: 2, textTransform: 'uppercase', color: 'var(--text-secondary)',
+            fontSize: 12, fontWeight: 700,
+            letterSpacing: 1.5, textTransform: 'uppercase', color: 'var(--text-secondary)',
             marginBottom: 20,
           }}>
             Verifiable Claims — Prompt A (Metabolic Scorecard)
@@ -199,7 +199,7 @@ export default function Hero() {
               padding: '16px 20px',
             }}>
               <div style={{
-                fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                fontSize: 11, fontWeight: 700,
                 letterSpacing: 1, textTransform: 'uppercase',
                 color: 'var(--text-tertiary)', marginBottom: 6,
               }}>
@@ -218,7 +218,6 @@ export default function Hero() {
         <div style={{
           marginTop: 48, display: 'flex', flexDirection: 'column',
           alignItems: 'center', gap: 8, color: 'var(--text-tertiary)', fontSize: 12,
-          fontFamily: 'var(--font-mono)',
         }}>
           <span>Scroll to explore</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ opacity: 0.5 }}>
@@ -250,7 +249,7 @@ function MetricCard({ label, value, sub, accent, warn }) {
       boxShadow: accent ? 'var(--shadow-glow)' : 'none',
     }}>
       <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+        fontSize: 11, fontWeight: 700,
         letterSpacing: 1.5, textTransform: 'uppercase',
         color: 'var(--text-tertiary)', marginBottom: 8,
       }}>

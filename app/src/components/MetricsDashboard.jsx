@@ -30,7 +30,7 @@ export default function MetricsDashboard() {
               <tr>
                 {['Model', 'Claims', 'Correct', 'Accuracy', 'Worst Error'].map(h => (
                   <th key={h} style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+                    fontSize: 11, fontWeight: 600,
                     letterSpacing: 0.5, textTransform: 'uppercase', color: 'var(--text-secondary)',
                     padding: '12px 16px', textAlign: 'left',
                     borderBottom: '2px solid var(--border)', background: 'var(--bg-secondary)',
@@ -140,7 +140,7 @@ export default function MetricsDashboard() {
 }
 
 const thStyle = {
-  fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+  fontSize: 11, fontWeight: 600,
   letterSpacing: 0.5, textTransform: 'uppercase', color: 'var(--text-secondary)',
   padding: '12px 16px', textAlign: 'left',
   borderBottom: '2px solid var(--border)', background: 'var(--bg-secondary)',
@@ -153,7 +153,7 @@ const tdStyle = {
 function SectionHeader({ children, style }) {
   return (
     <div style={{
-      fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
+      fontSize: 12, fontWeight: 600,
       letterSpacing: 1.5, textTransform: 'uppercase', color: 'var(--text-secondary)',
       marginBottom: 20, ...style,
     }}>

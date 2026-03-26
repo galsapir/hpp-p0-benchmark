@@ -116,7 +116,7 @@ export default function SideBySide({ data }) {
         color: 'var(--text-secondary)',
       }}>
         <span style={{
-          fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+          fontSize: 10, fontWeight: 600,
           letterSpacing: 1, textTransform: 'uppercase', color: 'var(--text-tertiary)',
           display: 'block', marginBottom: 8, fontStyle: 'normal',
         }}>
@@ -194,7 +194,7 @@ function OverviewGrid({ models: allModels, getContent }) {
                 background: model.color,
               }} />
               <span style={{
-                fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
+                fontSize: 12, fontWeight: 600,
                 color: model.isHpp ? 'var(--hpp-green)' : 'var(--text-primary)',
               }}>
                 {model.name}
@@ -221,7 +221,7 @@ function OverviewGrid({ models: allModels, getContent }) {
                 <button
                   onClick={() => setExpandedModel(model.id)}
                   style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+                    fontSize: 11, fontWeight: 600,
                     color: 'var(--text-secondary)', background: 'var(--bg-secondary)',
                     border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)',
                     padding: '6px 16px', cursor: 'pointer',
@@ -239,7 +239,7 @@ function OverviewGrid({ models: allModels, getContent }) {
                 <button
                   onClick={() => setExpandedModel(null)}
                   style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+                    fontSize: 11, fontWeight: 600,
                     color: 'var(--text-secondary)', background: 'var(--bg-secondary)',
                     border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)',
                     padding: '6px 16px', cursor: 'pointer',
@@ -275,7 +275,7 @@ function DeepDiveView({ hppContent, competitorContent, competitorId, competitorN
             width: 8, height: 8, borderRadius: '50%', background: 'var(--hpp-green)',
           }} />
           <span style={{
-            fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600,
+            fontSize: 13, fontWeight: 600,
             color: 'var(--hpp-green)',
           }}>
             HPP (P0)
@@ -303,7 +303,7 @@ function DeepDiveView({ hppContent, competitorContent, competitorId, competitorN
             background: models.find(m => m.id === competitorId)?.color || 'var(--text-secondary)',
           }} />
           <span style={{
-            fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600,
+            fontSize: 13, fontWeight: 600,
           }}>
             {competitorName}
           </span>

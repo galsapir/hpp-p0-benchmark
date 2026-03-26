@@ -97,18 +97,27 @@ const scoreColors = { 0: 'var(--error-red)', 1: 'var(--warning-orange)', 2: 'var
 export default function CompareTable({ data }) {
   const [selectedPrompt, setSelectedPrompt] = useState('promptA')
   const [selectedModel, setSelectedModel] = useState(null)
+  const [theme, setTheme] = useState(() => localStorage.getItem('hpp-theme') || 'light')
+
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light'
+    setTheme(next)
+    document.documentElement.setAttribute('data-theme', next)
+    localStorage.setItem('hpp-theme', next)
+  }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', transition: 'background 0.3s ease' }}>
       {/* Header */}
       <div style={{
         borderBottom: '1px solid var(--border)',
         padding: '20px 32px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        gap: 16, flexWrap: 'wrap',
       }}>
         <div>
           <a href="#" style={{
-            fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-tertiary)',
+            fontSize: 12, color: 'var(--text-tertiary)',
             textDecoration: 'none', display: 'block', marginBottom: 4,
           }}>
             ← Back to full benchmark
@@ -119,12 +128,26 @@ export default function CompareTable({ data }) {
             HPP vs. Frontier LLMs — Side-by-Side Scoring
           </h1>
         </div>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-tertiary)',
-          textAlign: 'right', lineHeight: 1.6,
-        }}>
-          Patient: 66yo M, T2D, 13-day CGM<br />
-          Models tested: base versions (not health-specific variants)
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{
+            fontSize: 11, color: 'var(--text-tertiary)',
+            textAlign: 'right', lineHeight: 1.6,
+          }}>
+            Patient: 66yo M, T2D, 13-day CGM<br />
+            Models tested: base versions (not health-specific variants)
+          </div>
+          <div className="theme-toggle">
+            <button
+              className={`theme-toggle-option ${theme === 'light' ? 'active' : ''}`}
+              onClick={() => { setTheme('light'); document.documentElement.setAttribute('data-theme', 'light'); localStorage.setItem('hpp-theme', 'light'); }}
+              title="Light mode"
+            >☀️</button>
+            <button
+              className={`theme-toggle-option ${theme === 'dark' ? 'active' : ''}`}
+              onClick={() => { setTheme('dark'); document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('hpp-theme', 'dark'); }}
+              title="Dark mode"
+            >🌙</button>
+          </div>
         </div>
       </div>
 
@@ -133,7 +156,7 @@ export default function CompareTable({ data }) {
         {/* Scoring Matrix */}
         <div style={{ marginBottom: 48 }}>
           <div style={{
-            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+            fontSize: 11, fontWeight: 600,
             letterSpacing: 2, textTransform: 'uppercase', color: 'var(--hpp-green)',
             marginBottom: 20,
           }}>
@@ -205,7 +228,7 @@ export default function CompareTable({ data }) {
           </div>
           <div style={{
             marginTop: 12, display: 'flex', gap: 20, fontSize: 12,
-            color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)',
+            color: 'var(--text-tertiary)',
           }}>
             <span><span style={{ color: 'var(--hpp-green)' }}>●</span> Full</span>
             <span><span style={{ color: 'var(--text-secondary)' }}>○</span> Partial</span>
@@ -216,7 +239,7 @@ export default function CompareTable({ data }) {
 
         {/* Model Cards with verdict + errors */}
         <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+          fontSize: 11, fontWeight: 600,
           letterSpacing: 2, textTransform: 'uppercase', color: 'var(--hpp-green)',
           marginBottom: 20,
         }}>
@@ -233,7 +256,7 @@ export default function CompareTable({ data }) {
               }}>
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: m.color }} />
                 <span style={{
-                  fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600,
+                  fontSize: 13, fontWeight: 600,
                   color: m.isHpp ? 'var(--hpp-green)' : 'var(--text-primary)',
                 }}>
                   {m.name}
@@ -251,7 +274,7 @@ export default function CompareTable({ data }) {
               {m.highlights.length > 0 && (
                 <div style={{ marginBottom: m.errors.length ? 12 : 0 }}>
                   <div style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                    fontSize: 10, fontWeight: 600,
                     letterSpacing: 1, color: m.isHpp ? 'var(--hpp-green)' : 'var(--text-tertiary)',
                     marginBottom: 6,
                   }}>
@@ -275,7 +298,7 @@ export default function CompareTable({ data }) {
               {m.errors.length > 0 && (
                 <div>
                   <div style={{
-                    fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                    fontSize: 10, fontWeight: 600,
                     letterSpacing: 1, color: 'var(--error-red)',
                     marginBottom: 6,
                   }}>
@@ -298,7 +321,7 @@ export default function CompareTable({ data }) {
 
         {/* Side-by-side full responses */}
         <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+          fontSize: 11, fontWeight: 600,
           letterSpacing: 2, textTransform: 'uppercase', color: 'var(--hpp-green)',
           marginBottom: 20,
         }}>
@@ -334,7 +357,7 @@ export default function CompareTable({ data }) {
               key={m.id}
               onClick={() => setSelectedModel(selectedModel === m.id ? null : m.id)}
               style={{
-                fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
+                fontSize: 12, fontWeight: 600,
                 padding: '8px 16px', borderRadius: 'var(--radius-sm)',
                 cursor: 'pointer', transition: 'all 0.2s ease',
                 background: selectedModel === m.id ? `${m.color}20` : 'var(--bg-secondary)',
@@ -378,7 +401,7 @@ export default function CompareTable({ data }) {
 }
 
 const thStyle = {
-  fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+  fontSize: 11, fontWeight: 600,
   letterSpacing: 0.5, textTransform: 'uppercase', color: 'var(--text-secondary)',
   padding: '12px 16px', textAlign: 'left',
   borderBottom: '2px solid var(--border)', background: 'var(--bg-secondary)',
