@@ -173,34 +173,35 @@ export default function Advantages() {
       }}>
         <div style={{
           fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--text-primary)',
-          marginBottom: 20, textAlign: 'center',
+          marginBottom: 28, textAlign: 'center',
         }}>
-          HPP's advantage is <span style={{ color: 'var(--hpp-green)', fontStyle: 'italic' }}>trust</span>
+          Five things frontier LLMs <span style={{ color: 'var(--error-red)', fontStyle: 'italic' }}>can't</span> do
         </div>
         <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16,
+          display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 20,
           textAlign: 'center',
         }}>
           {advantages.map((adv, i) => (
             <div key={i}>
-              <div style={{ fontSize: 20, marginBottom: 6 }}>{adv.icon}</div>
+              <div style={{ fontSize: 22, marginBottom: 8 }}>{adv.icon}</div>
               <div style={{
-                fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
-                color: 'var(--hpp-green)', marginBottom: 4,
-              }}>
-                {adv.stat}
-              </div>
-              <div style={{
-                fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.4,
+                fontSize: 14, fontWeight: 700, color: 'var(--text-primary)',
+                marginBottom: 4, lineHeight: 1.3,
               }}>
                 {adv.title}
+              </div>
+              <div style={{
+                fontFamily: 'var(--font-display)', fontSize: 13, color: 'var(--text-secondary)',
+                fontStyle: 'italic', lineHeight: 1.4,
+              }}>
+                {adv.pitch}
               </div>
             </div>
           ))}
         </div>
         <p style={{
           fontSize: 15, color: 'var(--text-secondary)', maxWidth: 700,
-          margin: '20px auto 0', lineHeight: 1.7, textAlign: 'center',
+          margin: '24px auto 0', lineHeight: 1.7, textAlign: 'center',
         }}>
           Population context with a real cohort. Your data computed, not guessed. Recommendations grounded in published science.
           Risk scores from validated clinical models. And when data is missing — HPP says so instead of fabricating an answer.
