@@ -1,5 +1,5 @@
 // ABOUTME: Root application component orchestrating all sections of the benchmark showcase.
-// ABOUTME: Loads deliverables data and passes it to child section components.
+// ABOUTME: Loads deliverables data and routes between main page and compare view via hash.
 import { useState, useEffect } from 'react'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
@@ -8,10 +8,12 @@ import QuotesGallery from './components/QuotesGallery'
 import MetricsDashboard from './components/MetricsDashboard'
 import Advantages from './components/Advantages'
 import RawDataExplorer from './components/RawDataExplorer'
+import CompareTable from './components/CompareTable'
 
 function App() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [route, setRoute] = useState(window.location.hash)
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}all_deliverables.json`)
@@ -24,6 +26,12 @@ function App() {
         console.error('Failed to load data:', err)
         setLoading(false)
       })
+  }, [])
+
+  useEffect(() => {
+    const onHash = () => setRoute(window.location.hash)
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
   if (loading) {
@@ -47,6 +55,10 @@ function App() {
         Failed to load benchmark data.
       </div>
     )
+  }
+
+  if (route === '#compare') {
+    return <CompareTable data={data} />
   }
 
   return (
