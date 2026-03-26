@@ -1,38 +1,77 @@
-// ABOUTME: Scrollable gallery of fabricated quotes from competitor models with ground truth.
+// ABOUTME: Scrollable gallery of ungrounded quotes grouped by category with ground truth.
 // ABOUTME: Each card shows the verbatim quote, error type badge, and the correct value.
-import { fabrications, hppQuotes, severityColors, categoryColors } from '../data/quotes'
+import { fabrications, hppQuotes, categories, severityColors } from '../data/quotes'
 
 export default function QuotesGallery() {
   return (
     <div className="container">
       <span className="section-label">Fact Check</span>
-      <h2 className="section-title">What They Said vs. What's True</h2>
+      <h2 className="section-title">What They Claimed vs. What's True</h2>
       <p className="section-subtitle" style={{ marginBottom: 48 }}>
-        Every quote is verbatim from the model's output. Ground truth is from validated CGM tools.
+        Every quote below is verbatim from a model's output. Ground truth comes from
+        validated CGM analysis tools. These aren't cherry-picked edge cases — they're
+        the claims a clinician would act on.
       </p>
 
-      {/* Fabrication quotes */}
-      <div style={{
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))',
-        gap: 20, marginBottom: 64,
-      }}>
-        {fabrications.map(fab => (
-          <FabricationCard key={fab.id} fab={fab} />
-        ))}
-      </div>
+      {/* Grouped fabrication quotes */}
+      {categories.map(cat => {
+        const items = fabrications.filter(f => f.category === cat.key)
+        if (items.length === 0) return null
+        return (
+          <div key={cat.key} style={{ marginBottom: 48 }}>
+            <div style={{
+              display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 8,
+            }}>
+              <h3 style={{
+                fontFamily: 'var(--font-body)', fontSize: 18, fontWeight: 700,
+                color: 'var(--text-primary)',
+              }}>
+                {cat.label}
+              </h3>
+              <span style={{
+                fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-tertiary)',
+              }}>
+                {items.length} {items.length === 1 ? 'instance' : 'instances'}
+              </span>
+            </div>
+            <p style={{
+              fontSize: 14, color: 'var(--text-secondary)', marginBottom: 20,
+              maxWidth: 600,
+            }}>
+              {cat.description}
+            </p>
+            <div style={{
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))',
+              gap: 16,
+            }}>
+              {items.map(fab => (
+                <FabricationCard key={fab.id} fab={fab} />
+              ))}
+            </div>
+          </div>
+        )
+      })}
 
       {/* HPP correct quotes */}
-      <div style={{ marginTop: 64 }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
-          letterSpacing: 3, textTransform: 'uppercase', color: 'var(--hpp-green)',
-          marginBottom: 24,
+      <div style={{
+        marginTop: 64, paddingTop: 48,
+        borderTop: '1px solid var(--border)',
+      }}>
+        <h3 style={{
+          fontFamily: 'var(--font-body)', fontSize: 18, fontWeight: 700,
+          color: 'var(--hpp-green)', marginBottom: 8,
         }}>
           What HPP Said Instead
-        </div>
+        </h3>
+        <p style={{
+          fontSize: 14, color: 'var(--text-secondary)', marginBottom: 24,
+          maxWidth: 600,
+        }}>
+          Every claim grounded in computed data, cited literature, or explicit uncertainty disclosure.
+        </p>
         <div style={{
           display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))',
-          gap: 20,
+          gap: 16,
         }}>
           {hppQuotes.map(q => (
             <div key={q.id} className="card card--hpp" style={{ position: 'relative' }}>
@@ -72,7 +111,6 @@ function FabricationCard({ fab }) {
   return (
     <div className="card" style={{
       borderColor: `${colors.border}30`,
-      position: 'relative',
       display: 'flex',
       flexDirection: 'column',
     }}>
@@ -88,7 +126,7 @@ function FabricationCard({ fab }) {
           {fab.modelName}
         </span>
         <span className={`badge ${badgeClass}`}>
-          {fab.category}
+          {fab.categoryLabel}
         </span>
       </div>
 

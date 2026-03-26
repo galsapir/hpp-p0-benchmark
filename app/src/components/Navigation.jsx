@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 
 const sections = [
   { id: 'hero', label: 'Overview' },
-  { id: 'comparison', label: 'Compare' },
-  { id: 'quotes', label: 'Quotes' },
+  { id: 'quotes', label: 'Fact Check' },
+  { id: 'comparison', label: 'Full Responses' },
   { id: 'metrics', label: 'Metrics' },
   { id: 'advantages', label: 'Why HPP' },
   { id: 'data', label: 'Raw Data' },

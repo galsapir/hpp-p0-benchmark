@@ -1,13 +1,21 @@
 // ABOUTME: Core comparison view with all-models overview and HPP vs one model deep-dive.
-// ABOUTME: Integrates fact-check highlights with hover tooltips on fabricated claims.
+// ABOUTME: Integrates fact-check highlights with hover tooltips on ungrounded claims.
 import { useState, useCallback, useEffect } from 'react'
 import MarkdownRenderer from './MarkdownRenderer'
-import { models, fileMap } from '../data/groundTruth'
+import { models, fileMap, accuracyPromptA } from '../data/groundTruth'
 import { fabrications } from '../data/quotes'
+
+const accuracyByModel = {
+  hpp: { accuracy: 100, label: '100%' },
+  gpt54: { accuracy: 80, label: '80%' },
+  claude: { accuracy: 50, label: '50%' },
+  gemini: { accuracy: 40, label: '40%' },
+  perplexity: { accuracy: 50, label: '50%' },
+}
 
 export default function SideBySide({ data }) {
   const [prompt, setPrompt] = useState('promptA')
-  const [view, setView] = useState('overview')
+  const [view, setView] = useState('deepdive')
   const [compareModel, setCompareModel] = useState('gpt54')
   const [tooltip, setTooltip] = useState(null)
 
@@ -43,11 +51,11 @@ export default function SideBySide({ data }) {
 
   return (
     <div className="container">
-      <span className="section-label">Comparison</span>
-      <h2 className="section-title">Side-by-Side Responses</h2>
+      <span className="section-label">Full Responses</span>
+      <h2 className="section-title">Side-by-Side Comparison</h2>
       <p className="section-subtitle" style={{ marginBottom: 32 }}>
-        Compare how each model answered the same question with the same patient data.
-        Red highlights mark fabricated claims.
+        Explore each model's complete response. In deep-dive mode, hover highlighted text
+        to see the ground truth.
       </p>
 
       {/* Controls */}
@@ -74,16 +82,16 @@ export default function SideBySide({ data }) {
 
         <div className="toggle-group">
           <button
-            className={`toggle-btn ${view === 'overview' ? 'active' : ''}`}
-            onClick={() => setView('overview')}
-          >
-            All Models
-          </button>
-          <button
             className={`toggle-btn ${view === 'deepdive' ? 'active' : ''}`}
             onClick={() => setView('deepdive')}
           >
             Deep Dive
+          </button>
+          <button
+            className={`toggle-btn ${view === 'overview' ? 'active' : ''}`}
+            onClick={() => setView('overview')}
+          >
+            All Models
           </button>
         </div>
 
@@ -118,7 +126,7 @@ export default function SideBySide({ data }) {
       </div>
 
       {view === 'overview' ? (
-        <OverviewGrid data={data} prompt={prompt} models={models} getContent={getContent} />
+        <OverviewGrid models={models} getContent={getContent} />
       ) : (
         <DeepDiveView
           hppContent={getContent('hpp')}
@@ -141,7 +149,7 @@ export default function SideBySide({ data }) {
             color: tooltip.fab.severity === 'red' ? 'var(--error-red)' :
                    tooltip.fab.severity === 'orange' ? 'var(--warning-orange)' : 'var(--caution-yellow)',
           }}>
-            {tooltip.fab.category}
+            {tooltip.fab.categoryLabel}
           </span>
           <div className="tooltip-error">{tooltip.fab.error}</div>
           <div className="tooltip-truth">
@@ -155,49 +163,102 @@ export default function SideBySide({ data }) {
 }
 
 function OverviewGrid({ models: allModels, getContent }) {
+  const [expandedModel, setExpandedModel] = useState(null)
+
   return (
     <div style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
       gap: 16,
     }}>
-      {allModels.map(model => (
-        <div
-          key={model.id}
-          className={`card ${model.isHpp ? 'card--hpp' : ''}`}
-          style={{ maxHeight: 600, overflow: 'auto' }}
-        >
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16,
-            paddingBottom: 12, borderBottom: '1px solid var(--border)',
-          }}>
+      {allModels.map(model => {
+        const acc = accuracyByModel[model.id]
+        const isExpanded = expandedModel === model.id
+        return (
+          <div
+            key={model.id}
+            className={`card ${model.isHpp ? 'card--hpp' : ''}`}
+            style={{
+              maxHeight: isExpanded ? 'none' : 420,
+              overflow: 'hidden',
+              position: 'relative',
+            }}
+          >
+            {/* Header with accuracy badge */}
             <div style={{
-              width: 8, height: 8, borderRadius: '50%',
-              background: model.color,
-            }} />
-            <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
-              color: model.isHpp ? 'var(--hpp-green)' : 'var(--text-primary)',
+              display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16,
+              paddingBottom: 12, borderBottom: '1px solid var(--border)',
             }}>
-              {model.name}
-            </span>
-            {model.isHpp && (
-              <span className="badge badge--green" style={{ marginLeft: 'auto' }}>
-                100% ACCURATE
+              <div style={{
+                width: 8, height: 8, borderRadius: '50%',
+                background: model.color,
+              }} />
+              <span style={{
+                fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
+                color: model.isHpp ? 'var(--hpp-green)' : 'var(--text-primary)',
+              }}>
+                {model.name}
               </span>
+              <span
+                className={`badge ${model.isHpp ? 'badge--green' : acc.accuracy >= 80 ? 'badge--green' : acc.accuracy >= 50 ? 'badge--orange' : 'badge--red'}`}
+                style={{ marginLeft: 'auto' }}
+              >
+                {acc.label} accurate
+              </span>
+            </div>
+            <MarkdownRenderer
+              content={getContent(model.id)}
+              modelId={model.id}
+            />
+
+            {/* Fade overlay + expand button */}
+            {!isExpanded && (
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                background: 'linear-gradient(transparent, var(--bg-tertiary) 70%)',
+                padding: '48px 24px 16px', textAlign: 'center',
+              }}>
+                <button
+                  onClick={() => setExpandedModel(model.id)}
+                  style={{
+                    fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+                    color: 'var(--text-secondary)', background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)',
+                    padding: '6px 16px', cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={e => e.target.style.color = 'var(--text-primary)'}
+                  onMouseLeave={e => e.target.style.color = 'var(--text-secondary)'}
+                >
+                  Read full response
+                </button>
+              </div>
+            )}
+            {isExpanded && (
+              <div style={{ textAlign: 'center', marginTop: 16 }}>
+                <button
+                  onClick={() => setExpandedModel(null)}
+                  style={{
+                    fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600,
+                    color: 'var(--text-secondary)', background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)',
+                    padding: '6px 16px', cursor: 'pointer',
+                  }}
+                >
+                  Collapse
+                </button>
+              </div>
             )}
           </div>
-          <MarkdownRenderer
-            content={getContent(model.id)}
-            modelId={model.id}
-          />
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
 
 function DeepDiveView({ hppContent, competitorContent, competitorId, competitorName }) {
+  const acc = accuracyByModel[competitorId]
+
   return (
     <div style={{
       display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24,
@@ -220,7 +281,7 @@ function DeepDiveView({ hppContent, competitorContent, competitorId, competitorN
             HPP (P0)
           </span>
           <span className="badge badge--green" style={{ marginLeft: 'auto' }}>
-            GROUNDED
+            100% accurate
           </span>
         </div>
         <MarkdownRenderer content={hppContent} modelId="hpp" />
@@ -229,7 +290,7 @@ function DeepDiveView({ hppContent, competitorContent, competitorId, competitorN
       {/* Competitor Column */}
       <div className="card" style={{
         maxHeight: '80vh', overflow: 'auto',
-        borderColor: 'rgba(255, 82, 114, 0.2)',
+        borderColor: acc.accuracy >= 80 ? 'var(--border)' : 'rgba(255, 82, 114, 0.2)',
       }}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16,
@@ -246,8 +307,11 @@ function DeepDiveView({ hppContent, competitorContent, competitorId, competitorN
           }}>
             {competitorName}
           </span>
-          <span className="badge badge--red" style={{ marginLeft: 'auto' }}>
-            HOVER RED TEXT
+          <span
+            className={`badge ${acc.accuracy >= 80 ? 'badge--orange' : 'badge--red'}`}
+            style={{ marginLeft: 'auto' }}
+          >
+            {acc.label} accurate · hover highlights
           </span>
         </div>
         <MarkdownRenderer

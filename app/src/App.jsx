@@ -56,11 +56,11 @@ function App() {
         <section id="hero">
           <Hero />
         </section>
-        <section id="comparison" className="section">
-          <SideBySide data={data} />
-        </section>
         <section id="quotes" className="section">
           <QuotesGallery />
+        </section>
+        <section id="comparison" className="section">
+          <SideBySide data={data} />
         </section>
         <section id="metrics" className="section">
           <MetricsDashboard />

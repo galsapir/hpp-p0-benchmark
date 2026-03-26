@@ -88,9 +88,9 @@ export default function Hero() {
           fontSize: 18, color: 'var(--text-secondary)', maxWidth: 640,
           lineHeight: 1.7, marginBottom: 48,
         }}>
-          Every external model fabricated at least one clinically important number.
-          HPP produced <span style={{ color: 'var(--hpp-green)', fontWeight: 700 }}>zero numerical errors</span> because
-          every claim traces to a validated tool output.
+          The gap isn't quality of writing — it's <span style={{ color: 'var(--hpp-green)', fontWeight: 700 }}>trustworthiness of numbers</span>.
+          Every external model produced confident claims not grounded in the patient's data.
+          HPP's claims all trace to validated tool outputs.
         </p>
 
         {/* Key metrics row */}
