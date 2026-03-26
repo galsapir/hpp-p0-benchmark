@@ -155,9 +155,52 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* Scroll hint */}
+        {/* Methodology */}
         <div className="animate-in animate-delay-5" style={{
-          marginTop: 64, display: 'flex', flexDirection: 'column',
+          marginTop: 48,
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1,
+          background: 'var(--border)',
+          borderRadius: 'var(--radius-md)',
+          overflow: 'hidden',
+          maxWidth: 900,
+        }}>
+          {[
+            {
+              label: 'How it works',
+              text: 'HPP orchestrates 20 validated analysis tools. External models received the same raw patient data — the way a patient would use them today.',
+            },
+            {
+              label: 'Same base model',
+              text: 'HPP runs on Claude Opus 4.6 — the same model that scored 50% without tools. The tools are the differentiator, not the LLM.',
+            },
+            {
+              label: 'Scope',
+              text: 'Single patient benchmark (66yo male, T2D, 13 days CGM + diet log). Architecture validation — not a statistical study.',
+            },
+          ].map(item => (
+            <div key={item.label} style={{
+              background: 'var(--bg-secondary)',
+              padding: '16px 20px',
+            }}>
+              <div style={{
+                fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                letterSpacing: 1, textTransform: 'uppercase',
+                color: 'var(--text-tertiary)', marginBottom: 6,
+              }}>
+                {item.label}
+              </div>
+              <div style={{
+                fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6,
+              }}>
+                {item.text}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Scroll hint */}
+        <div style={{
+          marginTop: 48, display: 'flex', flexDirection: 'column',
           alignItems: 'center', gap: 8, color: 'var(--text-tertiary)', fontSize: 12,
           fontFamily: 'var(--font-mono)',
         }}>
