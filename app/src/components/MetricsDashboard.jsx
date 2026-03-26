@@ -1,8 +1,6 @@
-// ABOUTME: Metrics dashboard with accuracy table, capability matrix, latency, and token charts.
-// ABOUTME: Uses Recharts for bar chart visualizations of model performance data.
-import { useState } from 'react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
-import { accuracyPromptA, latencyData, tokenData, capabilityMatrix, models } from '../data/groundTruth'
+// ABOUTME: Metrics dashboard with accuracy table and capability matrix.
+// ABOUTME: Compares numerical accuracy and feature coverage across models.
+import { accuracyPromptA, capabilityMatrix, models } from '../data/groundTruth'
 
 const modelColors = {
   'HPP (P0)': '#00dfa2',
@@ -13,8 +11,6 @@ const modelColors = {
 }
 
 export default function MetricsDashboard() {
-  const [latencyPrompt, setLatencyPrompt] = useState('promptA')
-
   return (
     <div className="container">
       <span className="section-label">Metrics</span>
@@ -139,77 +135,6 @@ export default function MetricsDashboard() {
         </div>
       </div>
 
-      {/* Charts row */}
-      <div className="metrics-charts-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
-        {/* Latency */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-            <SectionHeader style={{ marginBottom: 0 }}>Latency</SectionHeader>
-            <div className="toggle-group" style={{ marginLeft: 'auto' }}>
-              <button
-                className={`toggle-btn ${latencyPrompt === 'promptA' ? 'active' : ''}`}
-                onClick={() => setLatencyPrompt('promptA')}
-                style={{ fontSize: 11, padding: '4px 12px' }}
-              >
-                A
-              </button>
-              <button
-                className={`toggle-btn ${latencyPrompt === 'promptB' ? 'active' : ''}`}
-                onClick={() => setLatencyPrompt('promptB')}
-                style={{ fontSize: 11, padding: '4px 12px' }}
-              >
-                B
-              </button>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={latencyData[latencyPrompt]} layout="vertical" margin={{ left: 80, right: 20 }}>
-              <XAxis type="number" tick={{ fill: '#8b949e', fontSize: 11, fontFamily: 'var(--font-mono)' }}
-                tickFormatter={v => `${v}s`} />
-              <YAxis type="category" dataKey="model" tick={{ fill: '#8b949e', fontSize: 11, fontFamily: 'var(--font-mono)' }} width={80} />
-              <Tooltip
-                contentStyle={{ background: '#1a2740', border: '1px solid #2d3f55', borderRadius: 8, fontSize: 13 }}
-                formatter={(v) => [`${v}s`, 'Latency']}
-              />
-              <Bar dataKey="seconds" radius={[0, 4, 4, 0]}>
-                {latencyData[latencyPrompt].map((entry) => (
-                  <Cell key={entry.model} fill={modelColors[entry.model] || '#8b949e'} fillOpacity={0.7} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-          <div style={{
-            fontSize: 12, color: 'var(--text-tertiary)', marginTop: 8,
-            fontStyle: 'italic',
-          }}>
-            HPP uses 12 sequential tool calls — higher latency for grounded results.
-          </div>
-        </div>
-
-        {/* Token Usage */}
-        <div>
-          <SectionHeader>Token Usage (Prompt B)</SectionHeader>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={tokenData} layout="vertical" margin={{ left: 80, right: 20 }}>
-              <XAxis type="number" tick={{ fill: '#8b949e', fontSize: 11, fontFamily: 'var(--font-mono)' }}
-                tickFormatter={v => `${(v / 1000).toFixed(0)}k`} />
-              <YAxis type="category" dataKey="model" tick={{ fill: '#8b949e', fontSize: 11, fontFamily: 'var(--font-mono)' }} width={80} />
-              <Tooltip
-                contentStyle={{ background: '#1a2740', border: '1px solid #2d3f55', borderRadius: 8, fontSize: 13 }}
-                formatter={(v) => [`${v.toLocaleString()} tokens`]}
-              />
-              <Bar dataKey="prompt" stackId="a" fill="#8b9cf744" radius={[0, 0, 0, 0]} name="Prompt" />
-              <Bar dataKey="completion" stackId="a" fill="#8b9cf7" radius={[0, 4, 4, 0]} name="Completion" />
-            </BarChart>
-          </ResponsiveContainer>
-          <div style={{
-            fontSize: 12, color: 'var(--text-tertiary)', marginTop: 8,
-            fontStyle: 'italic',
-          }}>
-            HPP token data N/A — uses tool-based pipeline, not single-prompt inference.
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
