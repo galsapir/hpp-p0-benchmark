@@ -458,6 +458,43 @@ body {
 
 @media (max-width: 768px) {
   .section-title { font-size: 26px; }
+  .container { padding: 0 16px; }
+  .section { padding: 40px 0; }
+
+  /* Hero */
+  .hero-patient-badge { flex-wrap: wrap; gap: 6px !important; padding: 10px 14px !important; }
+  .hero-metrics-row { flex-direction: column; gap: 12px !important; }
+  .hero-metrics-row > div { min-width: 0 !important; width: 100%; }
+  .hero-methodology { grid-template-columns: 1fr !important; }
+  .hero-bars { max-width: 100% !important; }
+
+  /* Quotes */
+  .quotes-grid { grid-template-columns: 1fr !important; }
+
+  /* Side by side */
+  .deepdive-grid { grid-template-columns: 1fr !important; }
+  .deepdive-grid > .card { max-height: none !important; }
+  .overview-grid { grid-template-columns: 1fr !important; }
+  .comparison-controls { flex-direction: column; align-items: stretch !important; }
+  .comparison-controls .toggle-group { width: 100%; }
+  .comparison-controls .toggle-group .toggle-btn { flex: 1; text-align: center; padding: 8px 8px; font-size: 12px; }
+  .comparison-controls .select-dropdown { width: 100%; }
+  .comparison-divider { display: none; }
+
+  /* Metrics */
+  .metrics-charts-row { grid-template-columns: 1fr !important; }
+  .markdown-body table { font-size: 11px; }
+  .markdown-body th, .markdown-body td { padding: 6px 8px; }
+
+  /* Advantages */
+  .advantage-card { grid-template-columns: 1fr !important; }
+  .advantage-card .advantage-evidence { border-left: none !important; padding-left: 0 !important; border-top: 1px solid var(--border); padding-top: 16px; }
+  .advantages-summary-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+  .advantages-summary-grid > div:last-child { grid-column: 1 / -1; }
+
+  /* Toggle group stacking */
+  .toggle-group { width: 100%; }
+  .toggle-btn { flex: 1; text-align: center; font-size: 12px; padding: 8px 10px; }
 }
 
 /* ───── Animations ───── */

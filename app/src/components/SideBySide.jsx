@@ -59,7 +59,7 @@ export default function SideBySide({ data }) {
       </p>
 
       {/* Controls */}
-      <div style={{
+      <div className="comparison-controls" style={{
         display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap',
         marginBottom: 32,
       }}>
@@ -78,7 +78,7 @@ export default function SideBySide({ data }) {
           </button>
         </div>
 
-        <div style={{ width: 1, height: 28, background: 'var(--border)' }} />
+        <div className="comparison-divider" style={{ width: 1, height: 28, background: 'var(--border)' }} />
 
         <div className="toggle-group">
           <button
@@ -166,7 +166,7 @@ function OverviewGrid({ models: allModels, getContent }) {
   const [expandedModel, setExpandedModel] = useState(null)
 
   return (
-    <div style={{
+    <div className="overview-grid" style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
       gap: 16,
@@ -260,7 +260,7 @@ function DeepDiveView({ hppContent, competitorContent, competitorId, competitorN
   const acc = accuracyByModel[competitorId]
 
   return (
-    <div style={{
+    <div className="deepdive-grid" style={{
       display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24,
     }}>
       {/* HPP Column */}

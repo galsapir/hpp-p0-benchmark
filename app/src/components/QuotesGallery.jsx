@@ -41,7 +41,7 @@ export default function QuotesGallery() {
               {cat.description}
             </p>
             <div style={{
-              display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))',
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(420px, 100%), 1fr))',
               gap: 16,
             }}>
               {items.map(fab => (

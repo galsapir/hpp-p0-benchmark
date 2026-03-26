@@ -48,7 +48,7 @@ export default function Hero() {
 
       <div className="container" style={{ position: 'relative', zIndex: 1, padding: '80px 32px' }}>
         {/* Patient badge */}
-        <div className="animate-in" style={{
+        <div className="animate-in hero-patient-badge" style={{
           display: 'inline-flex', alignItems: 'center', gap: 12,
           background: 'var(--bg-tertiary)', border: '1px solid var(--border)',
           borderRadius: 100, padding: '8px 20px', marginBottom: 32,
@@ -94,7 +94,7 @@ export default function Hero() {
         </p>
 
         {/* Key metrics row */}
-        <div className="animate-in animate-delay-3" style={{
+        <div className="animate-in animate-delay-3 hero-metrics-row" style={{
           display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 64,
         }}>
           <MetricCard label="HPP Accuracy" value="100%" sub="10/10 claims correct" accent />
@@ -103,7 +103,7 @@ export default function Hero() {
         </div>
 
         {/* Accuracy bars */}
-        <div ref={barsRef} className="accuracy-bars animate-in animate-delay-4" style={{
+        <div ref={barsRef} className="accuracy-bars animate-in animate-delay-4 hero-bars" style={{
           maxWidth: 700,
         }}>
           <div style={{
@@ -156,7 +156,7 @@ export default function Hero() {
         </div>
 
         {/* Methodology */}
-        <div className="animate-in animate-delay-5" style={{
+        <div className="animate-in animate-delay-5 hero-methodology" style={{
           marginTop: 48,
           display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1,
           background: 'var(--border)',

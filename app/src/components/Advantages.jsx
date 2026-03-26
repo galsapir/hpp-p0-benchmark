@@ -73,7 +73,7 @@ export default function Advantages() {
         display: 'flex', flexDirection: 'column', gap: 24,
       }}>
         {advantages.map((adv, i) => (
-          <div key={i} className="card card--hpp" style={{
+          <div key={i} className="card card--hpp advantage-card" style={{
             borderColor: 'rgba(0,223,162,0.15)',
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -124,7 +124,7 @@ export default function Advantages() {
             </div>
 
             {/* Right: evidence quotes */}
-            <div style={{
+            <div className="advantage-evidence" style={{
               display: 'flex', flexDirection: 'column', gap: 12,
               borderLeft: '1px solid var(--border)', paddingLeft: 24,
             }}>
@@ -177,7 +177,7 @@ export default function Advantages() {
         }}>
           Five things frontier LLMs <span style={{ color: 'var(--error-red)', fontStyle: 'italic' }}>can't</span> do
         </div>
-        <div style={{
+        <div className="advantages-summary-grid" style={{
           display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 20,
           textAlign: 'center',
         }}>
